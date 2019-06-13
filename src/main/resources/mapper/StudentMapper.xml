@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.herbert.dao.StudentMapper" >
+    <insert id="addStudent" parameterType="student" >
+        <selectKey resultType="integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        <!-- 注意：这里如果不加表后不加属性约束，value后面的值要严格按照表字段顺序插入 -->
+        insert into t_student(username,password,sno,sex) values (#{username},#{password},#{sno},#{sex})
+    </insert>
+
+    <delete id="delStudent" parameterType="integer">
+        delete from t_student where id=#{id}
+    </delete>
+
+    <update id="updateStudent" parameterType="integer">
+        update t_student set sex="女" where id = #{id}
+    </update>
+
+<select id="queryStudent" parameterType="string" resultType="student">
+    select * from t_student where sno=#{sno}
+</select>
+
+</mapper>
